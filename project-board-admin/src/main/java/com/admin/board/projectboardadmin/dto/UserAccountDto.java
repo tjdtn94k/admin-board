@@ -2,7 +2,7 @@ package com.admin.board.projectboardadmin.dto;
 
 
 
-import com.admin.board.projectboardadmin.domain.UserAccount;
+import com.admin.board.projectboardadmin.domain.AdminAccount;
 import com.admin.board.projectboardadmin.domain.constant.RoleType;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -28,7 +28,7 @@ public record UserAccountDto(
         return new UserAccountDto(userId, userPassword, roleTypes, email, nickname, memo, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
-    public static UserAccountDto from(UserAccount entity) {
+    public static UserAccountDto from(AdminAccount entity) {
         return new UserAccountDto(
                 entity.getUserId(),
                 entity.getUserPassword(),
@@ -43,8 +43,8 @@ public record UserAccountDto(
         );
     }
 
-    public UserAccount toEntity() {
-        return UserAccount.of(
+    public AdminAccount toEntity() {
+        return AdminAccount.of(
                 userId,
                 userPassword,
                 roleTypes,
