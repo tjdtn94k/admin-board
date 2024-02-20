@@ -1,0 +1,99 @@
+debug: false
+management.endpoints.web.exposure.include: "*"
+server.port: 8081
+
+logging:
+  level:
+    com.projectboardadmin: debug
+    org.springframework.web.servlet: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+spring:
+  application.name: project-board
+  cloud.vault:
+    scheme: http
+    authentication: TOKEN
+    token: ${VAULT_TOKEN}
+  config.import: vault://
+  datasource:
+    url: ${LOCAL_DB_URL}
+    username: ${LOCAL_DB_USERNAME}
+    password: ${LOCAL_DB_PASSWORD}
+  jpa:
+    open-in-view: false
+    defer-datasource-initialization: true
+    hibernate.ddl-auto: create
+    hibernate:
+      dialect: org.hibernate.dialect.MariaDBDialect
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      hibernate.default_batch_fetch_size: 100
+      jdbc:
+        charset: UTF-8
+        encoding: UTF-8
+        collation: utf8_general_ci
+  sql.init.mode: always
+  sql.init.encoding: UTF-8
+  data.rest:
+    base-path: /api
+    detection-strategy: annotated
+  thymeleaf3.decoupled-logic: true
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-id: ${KAKAO_OAUTH_CLIENT_ID}
+            client-secret: ${KAKAO_OAUTH_CLIENT_SECRET}
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/kakao"
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+  devtools:
+    livereload:
+      port: 35730
+
+
+---
+
+springdoc:
+  # 기본값: application/json
+  # request media type 의 기본 값
+  default-consumes-media-type: application/json
+
+  # 기본값: */*
+  # response media type 의 기본 값
+  default-produces-media-type: application/json
+
+  # 스웨거에서 제공하는 ui 라이브러리 설정
+  swagger-ui:
+
+    #   기본 값 : /swagger-ui.html
+    #   Swagger HTML 문서 경로
+    path: /swagger-ui.html
+
+    #   swagger-ui를 사용할 것인지 여부
+    enabled: true
+
+  # 스웨거 api문서 설정
+  api-docs:
+
+    #   기본값 : /v3/api-docs
+    #   spring boot 웹 애플리케이션의 api를 OpenAPI 3을 이용하여 json 형식화 한것의 경로
+    path: /swagger/api-docs
+
+    #   스웨거 api문서를 사용할지 여부
+    enabled: true
+
+
+---
+
+spring:
+  config.activate.on-profile: test
+  datasource.url: jdbc:h2:mem:testdb?useUnicode=true&characterEncoding=utf8
