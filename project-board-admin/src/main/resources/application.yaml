@@ -59,7 +59,7 @@ spring:
     livereload:
       port: 35730
 
-
+project.board.url: ${PROJECT_BOARD_URL}
 ---
 
 springdoc:
