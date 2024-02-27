@@ -7,7 +7,8 @@
 * Java 17
 * Gradle 7.4.1
 * Spring Boot 2.7.0
-##기술 세부 스택
+* 
+## 기술 세부 스택
 * Spring Boot
 
 * Spring Boot Actuator
@@ -22,7 +23,8 @@
 * H2 Database
 * Maria Driver
 * Spring Configuration Processor
-##그  외
+
+## 그 외
 
 * AdminLTE 3.2
 * webjars-locator-core
